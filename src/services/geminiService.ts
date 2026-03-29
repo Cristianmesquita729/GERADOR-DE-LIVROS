@@ -1,7 +1,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 // Helper to get the latest AI instance (important for user-selected keys)
-const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY || process.env.GEMINI_API_KEY || "" });
+const getAI = () => {
+  const apiKey = process.env.API_KEY || 
+                 process.env.GEMINI_API_KEY || 
+                 (import.meta as any).env?.VITE_GEMINI_API_KEY || 
+                 "";
+  return new GoogleGenAI({ apiKey });
+};
 
 export interface Chapter {
   title: string;
